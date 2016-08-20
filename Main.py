@@ -10,25 +10,32 @@ script, filename = argv
 
 file_1 = open(filename , "r" )
 
-text = file_1.read().lower()
+#cleans file, eliminates unwanted punctuation 
+#eliminates text within brackets or parenthesis 
+#including the brackets or parathesis
+
+text = file_1.read().lower().replace("?","").replace(".","")
+text = re.sub("[\[].*?[\]]","", text)
+text = re.sub("[\(].*?[\)]","",text)
+
 file_1.close()
 
-# replaces every character that isn't a-z, 0-9, -, :, ?, 'or * with a space
-
-#print text 
-
-
-text = re.sub("[^a-z 0-9 \-  \:  \?  \' \*\‘ ]+", " ", text)
-
-#print text
 
 # puts dyad words on file in a list 
 
-#input = text.split()
+input = text.split()
 
-input = list(text.split())
 
-#print input 
+#replaces educated apostrophe with straight apostrophe
+
+i_list = []
+
+for i in input:
+	i_list.append(i.replace("\xe2\x80\x99","'"))
+
+input = i_list
+ 
+
 
 
 #opens master list
@@ -37,12 +44,21 @@ file = open ("master_list.txt" , "r")
 master = file.read().lower()
 file.close()
 
-master = re.sub("[^a-z 0-9 \-  \:  \?  \' \*\ ]+", " ", master)
 
 
 #adds master list to a list
 
-wanted = list(master.split())
+wanted = master.split()
+
+# replaces educated apostrophe with straight apostrophe
+
+w_list = []
+
+for w in wanted:
+	w_list.append(w.replace("\xe2\x80\x99","'"))
+
+wanted = w_list
+
 
 
 #counts occurrences of the master list words in dyad words 
@@ -62,7 +78,9 @@ print cnt
 
 #write to CSV 
    
-with open("dyad_data.csv","wb") as csvfile:
+csver = filename.replace(".txt",".csv")
+
+with open(csver,"wb") as csvfile:
     fieldnames=["word","occurrences"] 
     writer=csv.writer(csvfile)
     writer.writerow(fieldnames)
