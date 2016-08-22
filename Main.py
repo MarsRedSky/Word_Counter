@@ -6,7 +6,13 @@ from sys import argv
 
 script, filename = argv
 
+
+print "Would you like a Jeffersonian analysis? \n Type 1 for yes. \n Type 2  for no."
+jeff = int(raw_input())
+
+
 #opens file entered by user
+
 
 file_1 = open(filename , "r" )
 
@@ -17,6 +23,11 @@ file_1 = open(filename , "r" )
 text = file_1.read().lower().replace("?","").replace(".","")
 text = re.sub("[\[].*?[\]]","", text)
 text = re.sub("[\(].*?[\)]","",text)
+
+if jeff != 1: 
+	text= text.replace("*","").replace(":","")
+
+
 
 file_1.close()
 
