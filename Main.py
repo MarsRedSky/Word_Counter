@@ -4,11 +4,32 @@ import csv
 
 from sys import argv
 
+
 script, filename = argv
 
 
 print "Would you like a Jeffersonian analysis? \n Type 1 for yes. \n Type 2  for no."
-jeff = int(raw_input())
+
+jeff = 0
+
+def choice(x):
+	global jeff
+	try:
+		jeff = int(raw_input())
+		if jeff == 1 or jeff == 2:
+			return jeff
+		else:	
+			print "please select 1 or 2."
+			choice(jeff)
+	except ValueError:
+		print("please select 1 or 2.")
+		return choice(jeff)
+   	
+
+choice(jeff)
+
+
+
 
 
 #opens file entered by user
