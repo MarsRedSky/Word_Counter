@@ -2,7 +2,7 @@ import re
 from collections import Counter
 import csv
 import argparse
-import argparse 
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument('filename') 
@@ -16,15 +16,17 @@ file = file.read().lower()
 file = re.sub("[\[].*?[\]]"," ", file)
 file = re.sub("[\(].*?[\)]"," ", file)
 
-#Jeffersonian, deletes ? ., or not * : ? . 
+#Jeffersonian 
 if args.j:	
 	text = file.replace("?","").replace(".","")
+	print text
 
-
+#non-Jeffersonian
 else:
-	file = re.sub("[\*].*?[\*]", " ", file)
+	#deletes text surrounded by *s
+	file = re.sub("[\*].*?[\*]", "", file)
 	text = file.replace("*","").replace(":","").replace("?","").replace(".","")
-
+	print text
 
 
 
